@@ -7,10 +7,6 @@ class ConsoleGame
     @computer = TicTacToe::Player.new(@game)
   end
 
-  def start!
-    @game.start!
-  end
-
   def print_board
     puts "----+---+----"
     (0..2).each do |row|
@@ -19,18 +15,22 @@ class ConsoleGame
     end
   end
 
-  def game_loop
+  def start_game
+    @game.start!
     while @game.running
       player_move
       bot_move unless @game.winner
     end
+    print_board
+    puts end_message
   end
 
   def player_move
-    puts "Choose place to go"
-    print_board
-    field = gets.to_i
-    @player.move field
+    begin
+      print_board
+      puts "Choose place to go"
+      field = gets.to_i
+    end until @player.move field
   end
 
   def print_field(field)
@@ -44,14 +44,21 @@ class ConsoleGame
 
   def win_message
     puts "YOU WON!"
-    print_board
   end
 
   def bot_move
-    @computer.move first_free
+    @computer.move first_free if first_free
   end
 
   def first_free
     @game.board.index(false)
+  end
+
+  def end_message
+    if @game.winner
+      @game.winner == 0 ? "YOU WON! :)" : "COMPUTER WON! :("
+    else
+      "It's a tie."
+    end
   end
 end

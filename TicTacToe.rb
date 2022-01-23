@@ -13,15 +13,17 @@ module TicTacToe
     end
 
     def move!(field)
-      @board[field] = @current_player_id
-      if winning?
-        @running = false
-        @winner = @current_player_id
-      else
-        switch_players!
+      if @round < 9
+        @board[field] = @current_player_id
+        if winning?
+          @running = false
+          @winner = @current_player_id
+        else
+          switch_players!
+        end
+        @round += 1
+        @running = false if @round == 9
       end
-      @round += 1
-      @running = false if @round == 9
     end
 
     def board
