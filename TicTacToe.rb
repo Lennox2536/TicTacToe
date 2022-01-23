@@ -20,6 +20,8 @@ module TicTacToe
       else
         switch_players!
       end
+      @round += 1
+      @running = false if @round == 9
     end
 
     def board
@@ -37,11 +39,12 @@ module TicTacToe
     def start!
       @winner = nil
       @running = true
+      @round = 0
       clear_board!
     end
 
     def clear_board!
-      @board.fill(nil)
+      @board.fill(false)
     end
 
     def winning?
