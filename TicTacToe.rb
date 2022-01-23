@@ -53,6 +53,10 @@ module TicTacToe
     def winner
       @winner
     end
+
+    def running
+      @running
+    end
   end
 
   class Player
