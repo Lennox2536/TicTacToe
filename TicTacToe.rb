@@ -1,4 +1,6 @@
 module TicTacToe
+  WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+
   class Game
     def initialize
       @board = Array.new(9)
@@ -20,7 +22,26 @@ module TicTacToe
     end
 
     def switch_players!
-      @current_player_id = 1 - @current_player_id
+      @current_player_id = other_player
+    end
+
+    def other_player
+      1 - @current_player_id
+    end
+
+    def start!
+      @running = true
+      clear_board!
+    end
+
+    def clear_board!
+      @board.fill(nil)
+    end
+
+    def winning?
+      WINNING_COMBINATIONS.any? do |combination|
+        combination.all? {|field| @board[field] == @current_player_id}
+      end
     end
   end
 
