@@ -28,8 +28,9 @@ module TicTacToe
     def initialize(game)
       @game = game
     end
+
     def move(field)
-      if @game.free? field
+      if (@game.free? field) && (field < 9)
         @game.move!(field)
         true
       else
