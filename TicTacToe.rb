@@ -14,7 +14,12 @@ module TicTacToe
 
     def move!(field)
       @board[field] = @current_player_id
-      switch_players!
+      if winning?
+        @running = false
+        @winner = @current_player_id
+      else
+        switch_players!
+      end
     end
 
     def board
@@ -30,6 +35,7 @@ module TicTacToe
     end
 
     def start!
+      @winner = nil
       @running = true
       clear_board!
     end
@@ -42,6 +48,10 @@ module TicTacToe
       WINNING_COMBINATIONS.any? do |combination|
         combination.all? {|field| @board[field] == @current_player_id}
       end
+    end
+
+    def winner
+      @winner
     end
   end
 
