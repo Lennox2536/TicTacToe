@@ -12,6 +12,15 @@ module TicTacToe
 
     def move!(field)
       @board[field] = @current_player_id
+      switch_players!
+    end
+
+    def board
+      @board
+    end
+
+    def switch_players!
+      @current_player_id = 1 - @current_player_id
     end
   end
 
@@ -20,7 +29,12 @@ module TicTacToe
       @game = game
     end
     def move(field)
-      false
+      if @game.free? field
+        @game.move!(field)
+        true
+      else
+        false
+      end
     end
   end
 
